@@ -1535,7 +1535,13 @@ static NSString *ModelDescription(NSObject *model) {
 - (NSData *)modelToJSONData {
     id jsonObject = [self modelToJSONObject];
     if (!jsonObject) return nil;
-    return [NSJSONSerialization dataWithJSONObject:jsonObject options:0 error:NULL];
+    NSError *error = nil;
+    NSData *data = [NSJSONSerialization dataWithJSONObject:jsonObject options:0 error:&error];
+    if (error) {
+        return nil;
+    }else {
+        return data;
+    }
 }
 
 - (NSString *)modelToJSONString {
